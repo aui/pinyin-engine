@@ -1,0 +1,31 @@
+{
+  "name": "pinyin-engine",
+  "version": "1.0.0",
+  "description": "小巧高效的拼音匹配引擎",
+  "main": "src/cn.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aui/pinyin-engine.git"
+  },
+  "keywords": [
+    "pinyin"
+  ],
+  "author": "aui",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aui/pinyin-engine/issues"
+  },
+  "homepage": "https://github.com/aui/pinyin-engine#readme",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-env": "^1.6.0",
+    "webpack": "^3.5.3"
+  }
+}
