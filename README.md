@@ -14,7 +14,7 @@ npm install pinyin-engine --save
 
 ## API
 
-`new PinyinEngine(list, keys)`
+### new PinyinEngine(list, keys)
 
 建立拼音索引。
 
@@ -23,7 +23,7 @@ npm install pinyin-engine --save
 1. list `{[string]|[Object]}` 被索引的目标
 2. keys `{[string]}` 可选。如果 list 为 `Object`，这里用来设置需要被索引的 key
 
-`.query(keyword)`
+### .query(keyword)
 
 查询匹配拼音的数据。
 
@@ -35,13 +35,13 @@ npm install pinyin-engine --save
 
 `{[string]|{Object}}`
 
-## 繁体中文支持
+## 繁体中文版本
 
 ```js
 const PinyinEngine = require('pinyin-engine/tw');
 ```
 
-## 例子
+## 使用范例
 
 列表项为字符串：
 
