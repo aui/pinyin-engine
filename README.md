@@ -6,6 +6,8 @@
 2. 它的字典数据格式经过压缩处理，开启 Gzip 后体积会进一步减少，简体中文版本仅仅 17kb 大小
 3. 支持多音字的匹配
 
+在线演示：<https://aui.github.io/pinyin-engine/example/>
+
 ## 安装
 
 ```shell
