@@ -13,6 +13,15 @@ class PinyinEngine extends Engine {
     constructor(data, indexs) {
         super(data, indexs, DICT);
     }
+
+    /**
+     * 将内容进行分词
+     * @param	{string}		  words    目标字符串
+     * @return	{string}
+     */
+    static participle(keyword) {
+        return Engine.participle(keyword, DICT);
+    }
 }
 
 module.exports = PinyinEngine;

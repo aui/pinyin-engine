@@ -1,19 +1,3 @@
-// 笛卡尔乘积，返回两个数组的所有可能的组合
-const product = (a, b, sp) => {
-    const r = [];
-    const str = [];
-    for (let i = 0, l = a.length; i < l; i++) {
-        for (let j = 0, m = b.length; j < m; j++) {
-            const val = r[r.length] = (a[i] instanceof Array) ? a[i].concat(b[j]) : [].concat(a[i], b[j]);
-            str.push(val.join(''));
-        }
-    }
-    return {
-        array: r,
-        string: str.join(sp || '')
-    };
-};
-
 /**
  * 建立索引
  * @param	{[string]|[Object]}	 data    数据
@@ -21,7 +5,7 @@ const product = (a, b, sp) => {
  * @param   {array}              dict    词典数据
  */
 class Engine {
-    constructor(data, indexs, dict) {
+    constructor(data, indexs = [], dict = {}) {
         this.indexs = [];
         this.history = { keyword: '', indexs: [], data: [] };
         this.data = data;
@@ -29,16 +13,20 @@ class Engine {
 
         // 建立拼音关键词索引
         indexs = typeof indexs === 'string' ? [indexs] : indexs;
-        const excision = '\u0001';
         for (const item of data) {
             let keywords = '';
 
-            for (const key of indexs) {
-                const words = item[key];
-                if (words) {
-                    keywords += words + excision + this.toPinyin(words, false, excision);
+            if (typeof item === 'string') {
+                keywords = Engine.participle(item, dict);
+            } else {
+                for (const key of indexs) {
+                    const words = item[key];
+                    if (words) {
+                        keywords += Engine.participle(words, dict);
+                    }
                 }
             }
+
 
             this.indexs.push(keywords);
         }
@@ -77,49 +65,40 @@ class Engine {
 
 
     /**
-     * 汉字转拼音（支持多音字）
-     * @param	{String}		要转为拼音的目标字符串（汉字）
-     * @param	{Boolean}		是否仅保留匹配的第一个拼音
-     * @param	{String}		返回结果的分隔符，默认返回数组集合
-     * @return	{String, Array} 如果 sp 为 null，则返回 Array
-     *							否则，返回以 sp 分隔的字符串
-    */
-    toPinyin(keyword, single, sp) {
-        const dict = this.dict;
-        const len = keyword.length;
+     * 将内容进行分词
+     * @param	{string}		  words    目标字符串
+     * @param   {Object}          dict     字典
+     * @return	{string}
+     */
+    static participle(words, dict) {
+        let result = `${words}`;
+        const keywords = [];
 
-        if (len === 0) {
-            return single ? '' : []
+        for (const char of words) {
+            const pinyin = dict[char];
+            if (pinyin) {
+                keywords.push(pinyin);
+            }
         }
-        if (len === 1) {
-            const y = dict[keyword];
-            if (single) {
-                return y && y[0] ? y[0] : keyword
-            }
-            return y || [keyword];
-        } else {
-            const py = [];
-            for (let i = 0; i < len; i++) {
-                const y = dict[keyword.charAt(i)];
-                if (y) {
-                    py[py.length] = single ? y[0] : y;
-                } else {
-                    py[py.length] = single ? keyword.charAt(i) : [keyword.charAt(i)];
-                };
-            }
-            if (single) {
-                return sp == null ? py : py.join(sp || '')
-            }
 
-            let pys = py[0];
-            const pyl = py.length;
-            let prt;
-            for (let i = 1; i < pyl; i++) {
-                prt = product(pys, py[i], sp);
-                pys = prt.array;
+        let current = keywords.shift();
+
+        while(keywords.length) {
+            const array = [];
+            const next = keywords.shift();
+            for (const c of current) {
+                for (const n of next) {
+                    array.push(c + n);
+                }
             }
-            return sp == null ? pys : prt.string;
+            current = array;
         }
+
+        if (current) {
+            result += `,${current.join(',')}`;
+        }
+        
+        return result;
     }
 };
 
