@@ -95,7 +95,7 @@ class Engine {
         }
 
         if (current) {
-            result += `,${current.join(',')}`;
+            result += `\u0001${current.join('\u0001')}`;
         }
         
         return result;
