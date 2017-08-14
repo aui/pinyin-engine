@@ -1,6 +1,6 @@
 {
   "name": "pinyin-engine",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "小巧高效的拼音匹配引擎",
   "main": "src/cn.js",
   "directories": {
