@@ -1,4 +1,4 @@
-const dict = require('./dict-tw');
+const dict = require('./dict-tw.json');
 const decode = require('./decode');
 const Engine = require('./engine');
 
@@ -6,8 +6,8 @@ const DICT = decode(dict);
 
 /**
  * 拼音查询引擎
- * @param	{[string]|[Object]}	 data    数据
- * @param	{?string|[string]}   indexs  如果 data 为 [Object]，这里需要建立拼音索引 key
+ * @param	{[string]|[Object]}	 data         数据
+ * @param	{?string|[string]}   indexs       如果 data 为 [Object]，这里需要建立拼音索引 key
  */
 class PinyinEngine extends Engine {
     constructor(data, indexs) {
@@ -16,7 +16,7 @@ class PinyinEngine extends Engine {
 
     /**
      * 将内容进行分词
-     * @param	{string}		  words    目标字符串
+     * @param	{string}		  words        目标字符串
      * @return	{string}
      */
     static participle(keyword) {

@@ -1,5 +1,5 @@
 const assert = require('assert');
-const PinyinEngine = require('../');
+const PinyinEngine = require('../src/cn');
 
 describe('PinyinEngine()', () => {
 
@@ -32,6 +32,14 @@ describe('PinyinEngine()', () => {
                 name: '中央美院'
             }], pinyinEngine.query('meiyuan'));
         });
+        it('应当支持拼音首字母', () => {
+            const pinyinEngine = new PinyinEngine([
+                '清华大学',
+                '北京大学',
+                '中央美院'
+            ]);
+            assert.deepEqual(['中央美院'], pinyinEngine.query('zymy'));
+        });
 
     });
 
@@ -46,7 +54,7 @@ describe('PinyinEngine()', () => {
         });
 
         it('应当支持多个字符', () => {
-            assert.deepEqual(['中国人😊', 'zhongguoren'].join('\u0001'), PinyinEngine.participle('中国人😊'));
+            assert.deepEqual(['中国人😊', 'zhongguoren', 'zgr'].join('\u0001'), PinyinEngine.participle('中国人😊'));
         });
 
         it('应当支持单个多音字', () => {
@@ -54,7 +62,7 @@ describe('PinyinEngine()', () => {
         });
 
         it('应当支持多音字组合', () => {
-            assert.deepEqual(['乐乐😊', 'lele', 'leyue', 'yuele', 'yueyue'].join('\u0001'), PinyinEngine.participle('乐乐😊'));
+            assert.deepEqual(['乐乐😊', 'lele', 'leyue', 'yuele', 'yueyue', 'll', 'ly', 'yl', 'yy'].join('\u0001'), PinyinEngine.participle('乐乐😊'));
         });
 
     });
