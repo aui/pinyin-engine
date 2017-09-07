@@ -108,7 +108,7 @@
                 html = html == '' ? '<li><div class="tmpl-schoolBox-noContent">无查询结果..</div></li>' : html;
                 html = '<ul>'+ html +'</ul>';
             }
-            $log.innerHTML = '查询到' + list.length + '条结果，匹配耗时：' + time.end() + '毫秒';
+            $log.innerHTML = '查询到' + len + '条结果，匹配耗时：' + time.end() + '毫秒';
             $unisContent.innerHTML = html;
         }, 40); // 延时可以减小查询频率
     };
@@ -124,6 +124,6 @@
         console.debug(engine);
     }
 
-</script> 
+</script>
 </body>
 </html>

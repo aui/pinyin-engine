@@ -5,11 +5,12 @@
  * @param   {array}              dict         词典数据
  */
 class Engine {
-    constructor(data, indexs = [], dict = {}) {
+    constructor(data, indexs = [], dict = {}, prefix = '') {
         this.indexs = [];
         this.history = { keyword: '', indexs: [], data: [] };
         this.data = data;
         this.dict = dict;
+        this.prefix = prefix;
 
         // 建立拼音关键词索引
         indexs = typeof indexs === 'string' ? [indexs] : indexs;
@@ -17,18 +18,17 @@ class Engine {
             let keywords = '';
 
             if (typeof item === 'string') {
-                keywords = Engine.participle(item, dict);
+                keywords = Engine.participle(item, dict, prefix);
             } else {
                 for (const key of indexs) {
                     const words = item[key];
                     if (words) {
-                        keywords += Engine.participle(words, dict);
+                        keywords += Engine.participle(words, dict, prefix);
                     }
                 }
             }
 
-
-            this.indexs.push(keywords);
+            this.indexs.push(keywords.toLowerCase());
         }
     }
 
@@ -56,7 +56,7 @@ class Engine {
         history.indexs = [];
         
         for (let index = 0; index < indexs.length; index ++) {
-            if (indexs[index].indexOf(keyword) !== -1) {
+            if (indexs[index].indexOf(this.prefix+keyword) !== -1) {
                 history.indexs.push(indexs[index]);
                 result.push(data[index]);
             }
@@ -72,9 +72,9 @@ class Engine {
      * @param   {Object}          dict         字典
      * @return	{string}
      */
-    static participle(words, dict) {
+    static participle(words, dict, prefix='') {
         words = words.replace(/\s/g, '');
-        let result = `${words}`;
+        let result = `${prefix}${words}`;
         const keywords = [[], []];
 
         for (const char of words) {
@@ -102,7 +102,7 @@ class Engine {
             }
 
             if (current) {
-                result += `\u0001${current.join('\u0001')}`;
+                result += `\u0001${prefix}${current.join(`\u0001${prefix}`)}`;
             }
         }
         
