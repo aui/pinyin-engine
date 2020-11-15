@@ -21,7 +21,7 @@ class Engine {
                 keywords = Engine.participle(item, dict, prefix);
             } else {
                 for (const key of indexs) {
-                    const words = item[key];
+                    const words = resolve(key, item);
                     if (words) {
                         keywords += Engine.participle(words, dict, prefix);
                     }
@@ -109,5 +109,10 @@ class Engine {
         return result;
     }
 };
+
+function resolve(path, obj, separator='.') {
+    let properties = Array.isArray(path) ? path : path.split(separator)
+    return properties.reduce((prev, curr) => prev && prev[curr], obj)
+}
 
 module.exports = Engine;
