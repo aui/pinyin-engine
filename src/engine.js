@@ -41,6 +41,10 @@ class Engine {
 
         keyword = keyword.replace(/\s/g, '').toLowerCase();
 
+        if (keyword === '') {
+            return [...this.data];
+        }
+
         let indexs = this.indexs;
         let data = this.data;
         const history = this.history;
