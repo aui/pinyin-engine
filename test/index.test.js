@@ -40,7 +40,15 @@ describe('PinyinEngine()', () => {
             ]);
             assert.deepEqual(['中央美院'], pinyinEngine.query('zymy'));
         });
-
+        it('应当支持前模糊', () => {
+            const pinyinEngine = new PinyinEngine([
+                '清华大学',
+                '北京大学',
+                '中央美院'
+            ], '', true);
+            assert.notDeepEqual(['中央美院'], pinyinEngine.query('meiyuan'));
+            assert.deepEqual(['中央美院'], pinyinEngine.query('zy'));
+        });
     });
 
     describe('PinyinEngine.participle()', () => {
